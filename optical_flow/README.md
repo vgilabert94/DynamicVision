@@ -2,56 +2,45 @@
 # Implementation Lukas-Kanade and Horn-Schunck methods.
 
 ## AUTOR
-
-* **GILABERT MAÑO, VICENTE** - *Miembro 2* - [Vicent](https://github.com/vgilabert94)
-
-
-## DESCRIPCION
-Este repositorio contiene la práctica para la asignatura Aplicaciones Industriales en la Visión Artificial perteneciente al Máster Universitario en Visión Artificial impartido en la Universidad Rey Juan Carlos.  
-
-El objetivo de este trabajo es la clasificación y detección de defectos en superficies metálicas en una línea de producción. Para ello realizaremos una implementación en *Python* con un detector de objetos (YOLOv5) y lo conectaremos mediante *C* a la aplicación que ya está funcionando en la fábrica.
+* [**VICENTE GILABERT MAÑO**](https://www.linkedin.com/in/vgilabert/)
 
 
-## DOCUMENTACION
-Se adjunta la lista de la documentación oficial del proyecto entregada al cliente:
-* Entrega 1: -> [Especificación de Requisitos Software (ERS)](docs/ERS_grupoC.pdf)
+## DESCRIPTION
+Implementation of Dense **Lukas-Kanade** algorithm with least squares calculation and direct calculation. This is a Local metoth using a window sliding. Comparison of execution times (check report).
+
+Implementation of the **Horn-Schunck** algorithm by direct computation and parameter checking (lambda and iterations). This is a global, dense, variational calculus method. Creation of a stopping criterion with the norm of the velocity vector U.
 
 
+## FILES
+* **optical_flow.py:** where the algorithms and representations have been implemented as functions.
+* **main_optical_flow.py:** application to execute the algorithms on videos or consecutive images.
+* **test_optical_flow.py:** Where all the tests have been carried out for the practice with only 2 consecutive frames. 
 
-## ESTRUCTURE DEL PROYECTO
 
+## STRUCTURE OF THE PROJECT
 ```
 .
-├── dataset
-│        ├── ANNOTATIONS
-│        └── IMAGES
-├── docs
-│        └── ERS_grupoC.pdf
-├── Exemples
-│        ├── esquema.jpeg
-│        ├── resultado.jpeg
-│        ├── Screen1.png
-│        └── tipos_defectos.png
-├── pyproject.toml
+├── video1
+├── video3
 ├── README.md
-├── requirements_dev.txt
+├── main_optical_flow.py
+├── optical_flow.py
 ├── requirements.txt
-├── setup.cfg
-├── setup.py
-├── src
-│   └── algorithm
-│            ├── file_manager.py
-│            ├── __init__.py
-│            ├── main_algorithm.py
-│            ├── py.typed
-│            └── yolo_implementation.py
-├── tests
-│       └── test_algorithm.py
-└── tox.ini
+├── test_optical_flow
 ```
 
 
-## RESULTADOS 
-<p align="center">
-	<img src="Exemples/resultado.jpeg" alt="resultado" width="50%"/>
-</p>
+## RESULTS
+Read the full report (spanish) -> [PDF](docs/report.pdf)
+
+#### LUKAS-KANADE
+windows size = 25
+![image](https://user-images.githubusercontent.com/44602177/160464668-2620fc80-da63-4175-a9ff-4b65ced4e0c8.png)
+
+#### HORN-SCHUNCK
+lambda = 0.1 / Iterations = 25
+[image](https://user-images.githubusercontent.com/44602177/160464824-59551f79-9081-496d-b977-a51a167b1599.png)
+
+
+
+
