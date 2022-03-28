@@ -34,12 +34,14 @@ Implementation of the **Horn-Schunck** algorithm by direct computation and param
 Read the full report (spanish) -> [PDF](docs/report.pdf)
 
 #### LUKAS-KANADE
-windows size = 25
+windows size = 25  
+
 ![image](https://user-images.githubusercontent.com/44602177/160464668-2620fc80-da63-4175-a9ff-4b65ced4e0c8.png)
 
 #### HORN-SCHUNCK
-lambda = 0.1 / Iterations = 25
-[image](https://user-images.githubusercontent.com/44602177/160464824-59551f79-9081-496d-b977-a51a167b1599.png)
+lambda = 0.1 / Iterations = 25  
+
+![image](https://user-images.githubusercontent.com/44602177/160464824-59551f79-9081-496d-b977-a51a167b1599.png)
 
 
 
