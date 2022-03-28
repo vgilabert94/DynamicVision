@@ -30,12 +30,14 @@ def LK_optical_flow_v1(img1, img2, M=3, stride=1):
         flow = np.zeros((dim[0], dim[1], 2))
 
         Ix, Iy, It = get_gradients_optical_flow(img1, img2)
+        Ix2 = np.power(Ix, 2)
+        Iy2 = np.power(Iy, 2)
 
         for u in range(M, dim[0] - M + 1, stride):
             for v in range(M, dim[1] - M + 1, stride):
-                sumIx2 = np.sum(np.power(Ix[u:u+M, v:v+M], 2))
+                sumIx2 = np.sum(Ix2[u:u+M, v:v+M])
+                sumIy2 = np.sum(Iy2[u:u+M, v:v+M])
                 sumIxIy = np.sum(np.multiply(Ix[u:u+M, v:v+M], Iy[u:u+M, v:v+M]))
-                sumIy2 = np.sum(np.power(Iy[u:u+M, v:v+M], 2))
                 sumIxIt = np.sum(np.multiply(Ix[u:u+M, v:v+M], It[u:u+M, v:v+M]))
                 sumIyIt = np.sum(np.multiply(Iy[u:u+M, v:v+M], It[u:u+M, v:v+M]))
 
@@ -59,12 +61,14 @@ def LK_optical_flow_v2(img1, img2, M=3, stride=1):
         flow = np.zeros((dim[0], dim[1], 2))
 
         Ix, Iy, It = get_gradients_optical_flow(img1, img2)
+        Ix2 = np.power(Ix, 2)
+        Iy2 = np.power(Iy, 2)
 
         for u in range(M, dim[0] - M + 1, stride):
             for v in range(M, dim[1] - M + 1, stride):
-                sumIx2 = np.sum(np.power(Ix[u:u+M, v:v+M], 2))
+                sumIx2 = np.sum(Ix2[u:u+M, v:v+M])
+                sumIy2 = np.sum(Iy2[u:u+M, v:v+M])
                 sumIxIy = np.sum(np.multiply(Ix[u:u+M, v:v+M], Iy[u:u+M, v:v+M]))
-                sumIy2 = np.sum(np.power(Iy[u:u+M, v:v+M], 2))
                 sumIxIt = np.sum(np.multiply(Ix[u:u+M, v:v+M], It[u:u+M, v:v+M]))
                 sumIyIt = np.sum(np.multiply(Iy[u:u+M, v:v+M], It[u:u+M, v:v+M]))
 
@@ -91,6 +95,8 @@ def HS_optical_flow(img1, img2, its=300, alpha=2, delta=10**-1, convergence=True
         flow = np.zeros((dim[0], dim[1], 2))
 
         Ix, Iy, It = get_gradients_optical_flow(img1, img2)
+        Ix2 = np.power(Ix, 2)
+        Iy2 = np.power(Iy, 2)
                
         iter_counter = 0
 
@@ -104,15 +110,15 @@ def HS_optical_flow(img1, img2, its=300, alpha=2, delta=10**-1, convergence=True
             uAvg = cv2.filter2D(U, -1, kernel)
             vAvg = cv2.filter2D(V, -1, kernel)
             uNumer = np.multiply((np.multiply(Ix, uAvg) + np.multiply(Iy, vAvg) + It), Ix)
-            uDenom = alpha ** 2 + np.power(Ix, 2) + np.power(Iy, 2)
+            vNumer = np.multiply((np.multiply(Ix, uAvg) + np.multiply(Iy, vAvg) + It), Iy)
+            Denom = (alpha ** 2) + Ix2 + Iy2
+
             # U -> flow[:,:,0]
             U_prev = U
-            U = uAvg - np.divide(uNumer, uDenom)
-
-            vNumer = np.multiply((np.multiply(Ix, uAvg) + np.multiply(Iy, vAvg) + It), Iy)
-            vDenom = alpha ** 2 + np.power(Ix, 2) + np.power(Iy, 2)
+            U = uAvg - np.divide(uNumer, Denom)           
             # V -> flow[:,:,1]
-            V = vAvg - np.divide(vNumer, vDenom)
+            V = vAvg - np.divide(vNumer, Denom)
+            
             print("Iteration number: ", iter_counter)
 
             #If Check if our iteration is on range.
@@ -132,12 +138,7 @@ def HS_optical_flow(img1, img2, its=300, alpha=2, delta=10**-1, convergence=True
 def remove_noise(flow_in, th = 0.1):
     dim = flow_in.shape
     flow_out = np.zeros_like(flow_in)
-    #print(np.min(flow_in), np.max(flow_in))
     magnitude = np.linalg.norm(flow_in, axis=2)
-    #plt.hist(magnitude)
-    #print(np.min(magnitude), np.max(magnitude), np.abs(np.max(magnitude) - np.min(magnitude)))
-    #min_prox = np.min(magnitude) + (th * (np.abs(np.max(magnitude) - np.min(magnitude))))
-    #print(min_prox, np.min(magnitude), (th * (np.abs(np.max(magnitude) - np.min(magnitude)))))
     magnitude[magnitude < (th * (np.abs(np.max(magnitude) - np.min(magnitude))))] = 0
 
     for y in range(0, dim[0]):
@@ -145,7 +146,6 @@ def remove_noise(flow_in, th = 0.1):
             if magnitude[y, x] != 0:
                 flow_out[y, x, :] = flow_in[y, x, :]
 
-    #print(np.min(flow_out), np.max(flow_out), np.abs(np.max(flow_out) - np.min(flow_out)))
     return flow_out
 
 
