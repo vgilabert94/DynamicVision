@@ -28,3 +28,6 @@ Read the full report (spanish) -> [PDF](docs/report.pdf)
 
 [![Alt text](https://img.youtube.com/vi/c-4GPqreYbc/0.jpg)](https://www.youtube.com/watch?v=c-4GPqreYbc)
 
+
+[![Alt text](https://img.youtube.com/vi/OtBZLqypBJk/0.jpg)](https://www.youtube.com/watch?v=OtBZLqypBJk)
+
