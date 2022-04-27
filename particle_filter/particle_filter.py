@@ -188,7 +188,7 @@ def particles_checkPosition(img, particles, M):
 
 def main():
 
-    path = "SecuenciaPelota/"
+    path = "video/"
     N = 100     # Numero de particulas
     M = 40      # Tamaño de la particula
     instante_inicial = True
