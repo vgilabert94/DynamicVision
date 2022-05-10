@@ -13,6 +13,7 @@ Workd of Dynamic Vision subject in the Computer Vision Master [(MUVA)](https://m
 Optical flow implementation using Lukas-Kanade and Horn-Schunck algorithms. -> [Click here](optical_flow/README.md)
 
 ### Particle filter
+Particle filter for predict position of ball. -> [Click here](particle_filter/README.md)
 
 
 ### Kalman filter
